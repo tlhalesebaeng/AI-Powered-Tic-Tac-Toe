@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { WINNING_COMBINATIONS } from "./winning-combinations";
 import "./App.css";
 
 const INITIAL_GAME_BOARD = [
@@ -7,11 +8,56 @@ const INITIAL_GAME_BOARD = [
   [null, null, null],
 ];
 
+function deriveWinner() {
+  let winner;
+
+  for (const combination of WINNING_COMBINATIONS) {
+    const firstSymbol =
+      INITIAL_GAME_BOARD[combination[0].row][combination[0].col];
+    const secondSymbol =
+      INITIAL_GAME_BOARD[combination[1].row][combination[1].col];
+    const thirdSymbol =
+      INITIAL_GAME_BOARD[combination[2].row][combination[2].col];
+
+    if (
+      firstSymbol === secondSymbol &&
+      firstSymbol === thirdSymbol &&
+      secondSymbol === thirdSymbol
+    ) {
+      winner = firstSymbol;
+    }
+  }
+
+  return winner;
+}
+
+function hasDraw() {
+  for (let row = 0; row < INITIAL_GAME_BOARD.length; row++) {
+    for (let col = 0; col < INITIAL_GAME_BOARD.length; col++) {
+      if (INITIAL_GAME_BOARD[row][col] === null) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
 export default function App() {
   const [turn, setTurn] = useState("player x");
 
+  const winner = deriveWinner();
+  const draw = hasDraw();
+
+  if (winner) {
+    console.log(winner + " wins");
+    //show winner modal
+  } else if (draw) {
+    console.log("draw");
+  }
+
   function turnHandler(rowIndex, colIndex) {
-    //check if the block has no symbol yet
+    //check if the block has no symbol yet(optimize this with disabled button)
     if (!INITIAL_GAME_BOARD[rowIndex][colIndex]) {
       setTurn((prevState) => {
         const newTurn = prevState === "player x" ? "player o" : "player x";
