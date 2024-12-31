@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 
 const INITIAL_GAME_BOARD = [
@@ -7,7 +8,19 @@ const INITIAL_GAME_BOARD = [
 ];
 
 export default function App() {
-  const turn = "player x";
+  const [turn, setTurn] = useState("player x");
+
+  function turnHandler(rowIndex, colIndex) {
+    //check if the block has no symbol yet
+    if (!INITIAL_GAME_BOARD[rowIndex][colIndex]) {
+      setTurn((prevState) => {
+        const newTurn = prevState === "player x" ? "player o" : "player x";
+        INITIAL_GAME_BOARD[rowIndex][colIndex] =
+          prevState === "player x" ? "X" : "O";
+        return newTurn;
+      });
+    }
+  }
 
   return (
     <main>
@@ -33,7 +46,10 @@ export default function App() {
                 {row.map((playerSymbol, colIndex) => (
                   <li key={colIndex}>
                     {
-                      <button className="btn-player-symbol">
+                      <button
+                        onClick={() => turnHandler(rowIndex, colIndex)}
+                        className={`btn-player-symbol ${playerSymbol}`}
+                      >
                         {playerSymbol}
                       </button>
                     }

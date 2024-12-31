@@ -78,15 +78,29 @@ ul li {
   background-color: #e2be00;
 }
 
+.X {
+  color: #48d2fe;
+  font-family: "Arial";
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.O {
+  color: #e2be00;
+  font-family: "Arial";
+  font-size: 25px;
+  font-weight: bold;
+}
+
 .board-columns {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 50px);
   grid-column-gap: 10px;
 }
 
 .board-rows {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 50px);
   grid-row-gap: 10px;
 }
 
