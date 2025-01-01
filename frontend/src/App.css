@@ -1,25 +1,8 @@
-main {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #5a1e76;
-}
-
-button {
-  cursor: pointer;
-}
-
 .container {
   height: auto;
   padding: 30px 50px;
   border-radius: 10px;
   background-color: #2b0040;
-}
-
-ul li {
-  list-style-type: none;
 }
 
 .btn-player-symbol {
@@ -55,13 +38,13 @@ ul li {
 
 .game-history li h2 {
   text-transform: uppercase;
-  font-family: "Arial";
+  font-family: "Fredoka", sans-serif;
   font-size: 7px;
   font-weight: bold;
 }
 
 .game-history li p {
-  font-family: "Arial";
+  font-family: "Fredoka", sans-serif;
   font-size: 15px;
   font-weight: bold;
 }
@@ -80,14 +63,14 @@ ul li {
 
 .X {
   color: #48d2fe;
-  font-family: "Arial";
+  font-family: "Fredoka", sans-serif;
   font-size: 25px;
   font-weight: bold;
 }
 
 .O {
   color: #e2be00;
-  font-family: "Arial";
+  font-family: "Fredoka", sans-serif;
   font-size: 25px;
   font-weight: bold;
 }
@@ -113,7 +96,7 @@ ul li {
 }
 
 .player-turn-container {
-  font-family: "Arial";
+  font-family: "Fredoka", sans-serif;
   font-size: 12px;
   font-weight: bold;
 }
