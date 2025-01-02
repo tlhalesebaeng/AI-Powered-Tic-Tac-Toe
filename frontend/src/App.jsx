@@ -48,6 +48,7 @@ function hasDraw() {
 
 export default function App() {
     const [turn, setTurn] = useState({
+        moves: [],
         history: {
             X: 0,
             draw: 0,
@@ -59,7 +60,7 @@ export default function App() {
 
     const { currentTurn, history } = turn;
     let winner = deriveWinner();
-    const draw = hasDraw();
+    let draw = hasDraw();
 
     let result;
     if (winner) {
@@ -76,9 +77,12 @@ export default function App() {
         setTurn((prevState) => {
             const newTurn =
                 prevState.currentTurn === 'player x' ? 'player o' : 'player x';
-            GAME_BOARD[rowIndex][colIndex] =
-                prevState.currentTurn === 'player x' ? 'X' : 'O';
-            return { ...prevState, currentTurn: newTurn };
+            const symbol = prevState.currentTurn === 'player x' ? 'X' : 'O';
+            GAME_BOARD[rowIndex][colIndex] = symbol;
+            const move = { row: rowIndex, col: colIndex, symbol };
+            const newMoves = [...prevState.moves, move];
+
+            return { ...prevState, moves: newMoves, currentTurn: newTurn };
         });
     }
 
@@ -89,10 +93,19 @@ export default function App() {
                 GAME_BOARD[r][c] = null;
             }
         }
-        dialogRef.current.close();
         setTurn((prevState) => {
-            return { ...prevState, currentTurn: 'player x' };
+            const newTurn = { ...prevState, currentTurn: 'player x' };
+            if (winner) {
+                newTurn.history[winner]++;
+                winner = '';
+            } else if (draw) {
+                newTurn.history['draw']++;
+                draw = '';
+            }
+            return newTurn;
         });
+
+        dialogRef.current.close();
     }
 
     return (
