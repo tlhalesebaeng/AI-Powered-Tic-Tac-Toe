@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { WINNING_COMBINATIONS } from './winning-combinations';
 import './App.css';
 import GameBoard from './components/GameBoard';
 import History from './components/History';
 import PlayerTurn from './components/PlayerTurn';
+import Modal from './components/Modal';
 
-const INITIAL_GAME_BOARD = [
+let GAME_BOARD = [
     [null, null, null],
     [null, null, null],
     [null, null, null],
@@ -15,12 +16,9 @@ function deriveWinner() {
     let winner;
 
     for (const combination of WINNING_COMBINATIONS) {
-        const firstSymbol =
-            INITIAL_GAME_BOARD[combination[0].row][combination[0].col];
-        const secondSymbol =
-            INITIAL_GAME_BOARD[combination[1].row][combination[1].col];
-        const thirdSymbol =
-            INITIAL_GAME_BOARD[combination[2].row][combination[2].col];
+        const firstSymbol = GAME_BOARD[combination[0].row][combination[0].col];
+        const secondSymbol = GAME_BOARD[combination[1].row][combination[1].col];
+        const thirdSymbol = GAME_BOARD[combination[2].row][combination[2].col];
 
         if (
             firstSymbol === secondSymbol &&
@@ -35,9 +33,9 @@ function deriveWinner() {
 }
 
 function hasDraw() {
-    for (let row = 0; row < INITIAL_GAME_BOARD.length; row++) {
-        for (let col = 0; col < INITIAL_GAME_BOARD.length; col++) {
-            if (INITIAL_GAME_BOARD[row][col] === null) {
+    for (let row = 0; row < GAME_BOARD.length; row++) {
+        for (let col = 0; col < GAME_BOARD.length; col++) {
+            if (GAME_BOARD[row][col] === null) {
                 return false;
             }
         }
@@ -48,33 +46,49 @@ function hasDraw() {
 
 export default function App() {
     const [currentTurn, setCurrentTurn] = useState('player x');
+    const dialogRef = useRef();
 
     const winner = deriveWinner();
     const draw = hasDraw();
 
+    let result;
     if (winner) {
-        console.log(winner + ' wins');
-        //show winner modal
+        result = winner;
+        dialogRef.current.open();
     } else if (draw) {
-        console.log('draw');
+        result = 'draw';
+        dialogRef.current.open();
+    } else {
+        result = '';
     }
 
     function handleCurrentTurn(rowIndex, colIndex) {
         setCurrentTurn((prevState) => {
             const newTurn = prevState === 'player x' ? 'player o' : 'player x';
-            INITIAL_GAME_BOARD[rowIndex][colIndex] =
+            GAME_BOARD[rowIndex][colIndex] =
                 prevState === 'player x' ? 'X' : 'O';
             return newTurn;
         });
     }
 
+    function handleReplay() {
+        GAME_BOARD = [
+            [null, null, null],
+            [null, null, null],
+            [null, null, null],
+        ];
+        setCurrentTurn('player x');
+        dialogRef.current.close();
+    }
+
     return (
         <main>
+            <Modal onReplay={handleReplay} result={result} ref={dialogRef} />
             <div className="container">
                 <History />
                 <GameBoard
                     onSelectSquare={handleCurrentTurn}
-                    board={INITIAL_GAME_BOARD}
+                    board={GAME_BOARD}
                 />
                 <PlayerTurn turn={currentTurn} />
             </div>
