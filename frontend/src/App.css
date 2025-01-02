@@ -1,102 +1,102 @@
 .container {
-  height: auto;
-  padding: 30px 50px;
-  border-radius: 10px;
-  background-color: #2b0040;
+    height: auto;
+    padding: 30px 50px;
+    border-radius: 10px;
+    background-color: #2b0040;
 }
 
 .btn-player-symbol {
-  height: 50px;
-  width: 50px;
-  border: none;
-  border-radius: 5px;
-  background-color: #43115b;
-  box-sizing: border-box;
+    height: 50px;
+    width: 50px;
+    border: none;
+    border-radius: 5px;
+    background-color: #43115b;
+    box-sizing: border-box;
 }
 
 .game-history {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
 }
 
 .game-history li {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 50px;
-  width: 50px;
-  padding: 6px 0;
-  border: none;
-  border-radius: 5px;
-  box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+    padding: 6px 0;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .game-history li h2 {
-  text-transform: uppercase;
-  font-family: "Fredoka", sans-serif;
-  font-size: 7px;
-  font-weight: bold;
+    text-transform: uppercase;
+    font-family: "Fredoka", sans-serif;
+    font-size: 7px;
+    font-weight: bold;
 }
 
 .game-history li p {
-  font-family: "Fredoka", sans-serif;
-  font-size: 15px;
-  font-weight: bold;
+    font-family: "Fredoka", sans-serif;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 .player-x-color {
-  background-color: #48d2fe;
+    background-color: #48d2fe;
 }
 
 .draw-color {
-  background-color: #bcdbf9;
+    background-color: #bcdbf9;
 }
 
 .player-o-color {
-  background-color: #e2be00;
+    background-color: #e2be00;
 }
 
 .X {
-  color: #48d2fe;
-  font-family: "Fredoka", sans-serif;
-  font-size: 25px;
-  font-weight: bold;
+    color: #48d2fe;
+    font-family: "Fredoka", sans-serif;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .O {
-  color: #e2be00;
-  font-family: "Fredoka", sans-serif;
-  font-size: 25px;
-  font-weight: bold;
+    color: #e2be00;
+    font-family: "Fredoka", sans-serif;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .board-columns {
-  display: grid;
-  grid-template-columns: repeat(3, 50px);
-  grid-column-gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 50px);
+    grid-column-gap: 10px;
 }
 
 .board-rows {
-  display: grid;
-  grid-template-rows: repeat(3, 50px);
-  grid-row-gap: 10px;
+    display: grid;
+    grid-template-rows: repeat(3, 50px);
+    grid-row-gap: 10px;
 }
 
 .player-turn-container {
-  margin: 30px 0;
-  padding: 10px 0;
-  display: flex;
-  justify-content: center;
-  border-radius: 3px;
+    margin: 30px 0;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    border-radius: 3px;
 }
 
 .player-turn-container {
-  font-family: "Fredoka", sans-serif;
-  font-size: 12px;
-  font-weight: bold;
+    font-family: "Fredoka", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
 }
