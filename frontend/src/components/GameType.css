@@ -1,0 +1,16 @@
+.btn-select-game-type {
+    height: 30px;
+    width: 250px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.selected-game-type {
+    border: 2px solid rgb(91, 91, 91);
+}

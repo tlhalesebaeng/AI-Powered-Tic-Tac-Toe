@@ -1,21 +1,65 @@
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 main {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #5a1e76;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #5a1e76;
+}
+
+p,
+h1,
+h2 {
+    font-family: 'Fredoka', sans-serif;
 }
 
 button {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 ul li {
-  list-style-type: none;
+    list-style-type: none;
+}
+
+.player-x-color {
+    background-color: #48d2fe;
+}
+
+.draw-color {
+    background-color: #bcdbf9;
+}
+
+.player-o-color {
+    background-color: #e2be00;
+}
+
+.X {
+    color: #48d2fe;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.O {
+    color: #e2be00;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
