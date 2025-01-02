@@ -47,10 +47,17 @@ function hasDraw() {
 }
 
 export default function App() {
-    const [turn, setTurn] = useState({ currentTurn: 'player x' });
+    const [turn, setTurn] = useState({
+        history: {
+            X: 0,
+            draw: 0,
+            O: 0,
+        },
+        currentTurn: 'player x',
+    });
     const dialogRef = useRef();
 
-    const { currentTurn } = turn;
+    const { currentTurn, history } = turn;
     let winner = deriveWinner();
     const draw = hasDraw();
 
@@ -67,10 +74,11 @@ export default function App() {
 
     function handleCurrentTurn(rowIndex, colIndex) {
         setTurn((prevState) => {
-            const newTurn = prevState === 'player x' ? 'player o' : 'player x';
+            const newTurn =
+                prevState.currentTurn === 'player x' ? 'player o' : 'player x';
             GAME_BOARD[rowIndex][colIndex] =
-                prevState === 'player x' ? 'X' : 'O';
-            return newTurn;
+                prevState.currentTurn === 'player x' ? 'X' : 'O';
+            return { ...prevState, currentTurn: newTurn };
         });
     }
 
@@ -82,14 +90,16 @@ export default function App() {
             }
         }
         dialogRef.current.close();
-        setTurn({ currentTurn: 'player x' });
+        setTurn((prevState) => {
+            return { ...prevState, currentTurn: 'player x' };
+        });
     }
 
     return (
         <main>
             <Modal onReplay={handleReplay} result={result} ref={dialogRef} />
             <div className="container">
-                <History />
+                <History history={history} />
                 <GameBoard
                     onSelectSquare={handleCurrentTurn}
                     board={GAME_BOARD}
