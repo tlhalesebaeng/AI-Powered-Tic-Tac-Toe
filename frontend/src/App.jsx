@@ -20,12 +20,14 @@ function deriveWinner() {
         const secondSymbol = GAME_BOARD[combination[1].row][combination[1].col];
         const thirdSymbol = GAME_BOARD[combination[2].row][combination[2].col];
 
-        if (
-            firstSymbol === secondSymbol &&
-            firstSymbol === thirdSymbol &&
-            secondSymbol === thirdSymbol
-        ) {
-            winner = firstSymbol;
+        if (firstSymbol !== null) {
+            if (
+                firstSymbol === secondSymbol &&
+                firstSymbol === thirdSymbol &&
+                secondSymbol === thirdSymbol
+            ) {
+                winner = firstSymbol;
+            }
         }
     }
 
@@ -45,10 +47,11 @@ function hasDraw() {
 }
 
 export default function App() {
-    const [currentTurn, setCurrentTurn] = useState('player x');
+    const [turn, setTurn] = useState({ currentTurn: 'player x' });
     const dialogRef = useRef();
 
-    const winner = deriveWinner();
+    const { currentTurn } = turn;
+    let winner = deriveWinner();
     const draw = hasDraw();
 
     let result;
@@ -63,7 +66,7 @@ export default function App() {
     }
 
     function handleCurrentTurn(rowIndex, colIndex) {
-        setCurrentTurn((prevState) => {
+        setTurn((prevState) => {
             const newTurn = prevState === 'player x' ? 'player o' : 'player x';
             GAME_BOARD[rowIndex][colIndex] =
                 prevState === 'player x' ? 'X' : 'O';
@@ -72,13 +75,14 @@ export default function App() {
     }
 
     function handleReplay() {
-        GAME_BOARD = [
-            [null, null, null],
-            [null, null, null],
-            [null, null, null],
-        ];
-        setCurrentTurn('player x');
+        const len = GAME_BOARD.length;
+        for (let r = 0; r < len; r++) {
+            for (let c = 0; c < len; c++) {
+                GAME_BOARD[r][c] = null;
+            }
+        }
         dialogRef.current.close();
+        setTurn({ currentTurn: 'player x' });
     }
 
     return (
