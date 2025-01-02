@@ -4,7 +4,7 @@ import './App.css';
 import GameBoard from './components/GameBoard';
 import History from './components/History';
 import PlayerTurn from './components/PlayerTurn';
-import Modal from './components/Modal';
+import ResultModal from './components/ResultModal';
 
 let GAME_BOARD = [
     [null, null, null],
@@ -108,9 +108,18 @@ export default function App() {
         dialogRef.current.close();
     }
 
+    function handleGoToHome() {
+        console.log('redirecting to home');
+    }
+
     return (
         <main>
-            <Modal onReplay={handleReplay} result={result} ref={dialogRef} />
+            <ResultModal
+                onHome={handleGoToHome}
+                onReplay={handleReplay}
+                result={result}
+                ref={dialogRef}
+            />
             <div className="container">
                 <History history={history} />
                 <GameBoard
