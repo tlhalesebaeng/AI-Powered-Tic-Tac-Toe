@@ -115,6 +115,7 @@ export default function GamePage({}) {
     }
 
     function handleGoToHome() {
+        navigate('/');
         setTurn({
             moves: [],
             history: {
@@ -126,7 +127,6 @@ export default function GamePage({}) {
         });
         resetBoard();
         dialogRef.current.close();
-        navigate('/');
     }
 
     return (
