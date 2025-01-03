@@ -47,6 +47,15 @@ function hasDraw() {
     return true;
 }
 
+function resetBoard() {
+    const len = GAME_BOARD.length;
+    for (let r = 0; r < len; r++) {
+        for (let c = 0; c < len; c++) {
+            GAME_BOARD[r][c] = null;
+        }
+    }
+}
+
 export default function GamePage({}) {
     const [turn, setTurn] = useState({
         moves: [],
@@ -89,12 +98,7 @@ export default function GamePage({}) {
     }
 
     function handleReplay() {
-        const len = GAME_BOARD.length;
-        for (let r = 0; r < len; r++) {
-            for (let c = 0; c < len; c++) {
-                GAME_BOARD[r][c] = null;
-            }
-        }
+        resetBoard();
         setTurn((prevState) => {
             const newTurn = { ...prevState, currentTurn: 'player x' };
             if (winner) {
@@ -111,6 +115,17 @@ export default function GamePage({}) {
     }
 
     function handleGoToHome() {
+        setTurn({
+            moves: [],
+            history: {
+                X: 0,
+                draw: 0,
+                O: 0,
+            },
+            currentTurn: 'player x',
+        });
+        resetBoard();
+        dialogRef.current.close();
         navigate('/');
     }
 
