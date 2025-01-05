@@ -115,7 +115,7 @@ export default function GamePage({}) {
     }
 
     function handleGoToHome() {
-        navigate('/');
+        navigate('/type');
         setTurn({
             moves: [],
             history: {
