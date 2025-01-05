@@ -4,6 +4,8 @@ import GamePage from './pages/GamePage';
 import LandingPage from './pages/LandingPage.jsx';
 import RootLayout from './pages/RootLayout.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
+import TypesSelection from './pages/TypesSelection.jsx';
+import CreateSession from './pages/CreateSession.jsx';
 
 const router = createBrowserRouter([
     {
@@ -16,8 +18,16 @@ const router = createBrowserRouter([
                 element: <LandingPage />,
             },
             {
+                path: '/type',
+                element: <TypesSelection />,
+            },
+            {
                 path: '/game',
                 element: <GamePage />,
+            },
+            {
+                path: '/type/online',
+                element: <CreateSession />,
             },
         ],
     },

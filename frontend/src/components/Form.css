@@ -27,3 +27,12 @@ form button {
     font-weight: 700;
     text-transform: uppercase;
 }
+
+form p {
+    margin-top: 5px;
+    font-size: 10px;
+    color: #bcdaf96a;
+    text-transform: uppercase;
+    font-weight: bold;
+    align-self: flex-start;
+}

@@ -21,9 +21,10 @@ export default function TypesSelection() {
             ...prevState,
             selectedGameType: gameType,
         }));
-        if (selectedGameType === 'online multiplayer') {
+        if (gameType === 'online multiplayer') {
             //navigate to looking for a player
-        } else if (selectedGameType === 'player to player') {
+            navigate('/type/online');
+        } else if (gameType === 'player to player') {
             navigate('/game');
         }
     }
