@@ -37,6 +37,7 @@ dialog div button {
     background-color: transparent;
     border: none;
     border-radius: 3px;
+    outline: none;
 }
 
 dialog div button:hover {

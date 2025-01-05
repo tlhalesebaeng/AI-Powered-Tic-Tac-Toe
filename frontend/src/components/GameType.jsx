@@ -3,18 +3,16 @@ import './GameType.css';
 export default function GameType({ selectedGameType, onSelectGameType }) {
     return (
         <div className="game-type column">
-            {false && (
-                <button
-                    onClick={() => onSelectGameType('online multiplayer')}
-                    className={`btn-select-game-type player-x-color ${
-                        selectedGameType === 'online multiplayer'
-                            ? 'selected-game-type'
-                            : null
-                    }`}
-                >
-                    Online Multiplayer
-                </button>
-            )}
+            <button
+                onClick={() => onSelectGameType('online multiplayer')}
+                className={`btn-select-game-type player-x-color ${
+                    selectedGameType === 'online multiplayer'
+                        ? 'selected-game-type'
+                        : null
+                }`}
+            >
+                Online Multiplayer
+            </button>
             {false && (
                 <button
                     onClick={() => onSelectGameType('single player')}
