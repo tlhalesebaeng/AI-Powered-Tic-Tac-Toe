@@ -8,6 +8,7 @@ export default function CreateSession() {
     const opponentUsernameRef = useRef();
     const dialogRef = useRef();
     const navigate = useNavigate();
+    let timeout;
 
     function handleSubmitOpponentUsername(event) {
         event.preventDefault();
@@ -16,6 +17,9 @@ export default function CreateSession() {
             //add a flashing animation of the heading
         } else {
             dialogRef.current.open();
+            timeout = setTimeout(() => {
+                navigate('/game');
+            }, 5000);
             //navigate('/game');
         }
     }
@@ -26,6 +30,8 @@ export default function CreateSession() {
 
     function handleCancel() {
         dialogRef.current.close();
+        clearTimeout(timeout);
+        navigate('/type');
     }
 
     return (

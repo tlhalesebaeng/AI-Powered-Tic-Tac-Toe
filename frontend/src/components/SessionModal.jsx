@@ -1,11 +1,14 @@
 import { forwardRef, useState } from 'react';
 import Modal from './Modal';
 import './SessionModal.css';
+import { useNavigate } from 'react-router-dom';
 
 const SessionModal = forwardRef(function SessionModal(
     { onRetry, onCancel },
     ref
 ) {
+    const navigate = useNavigate();
+
     const [title, setTitle] = useState('Looking for player...');
     const details = {
         gameType: 'online multiplayer',
