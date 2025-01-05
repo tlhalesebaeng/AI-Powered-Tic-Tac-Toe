@@ -20,7 +20,6 @@ export default function CreateSession() {
             timeout = setTimeout(() => {
                 navigate('/game');
             }, 5000);
-            //navigate('/game');
         }
     }
 

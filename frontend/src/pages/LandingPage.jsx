@@ -13,6 +13,7 @@ export default function LandingPage() {
         if (username === '') {
             //add a flashing animation of the heading
         } else {
+            localStorage.setItem('username', username);
             navigate('/type');
         }
     }
