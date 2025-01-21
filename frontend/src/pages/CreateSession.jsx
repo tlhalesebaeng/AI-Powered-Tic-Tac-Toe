@@ -10,16 +10,22 @@ export default function CreateSession() {
     const navigate = useNavigate();
     let timeout;
 
+    //to remove this
+    const username = localStorage.getItem('username');
+
     function handleSubmitOpponentUsername(event) {
         event.preventDefault();
         const opponentUsername = opponentUsernameRef.current.value;
         if (opponentUsername === '') {
             //add a flashing animation of the heading
         } else {
-            dialogRef.current.open();
-            timeout = setTimeout(() => {
-                navigate('/game');
-            }, 5000);
+            //dialogRef.current.open();
+            // timeout = setTimeout(() => {
+            //     navigate('/game');
+            // }, 5000);
+            //customize this alert
+            //alert(`${username} wants to play`);
+            navigate('/game');
         }
     }
 

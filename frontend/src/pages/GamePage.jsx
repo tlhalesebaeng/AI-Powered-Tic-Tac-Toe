@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { WINNING_COMBINATIONS } from '../winning-combinations';
 import './GamePage.css';
 import GameBoard from '../components/GameBoard';
@@ -6,6 +6,9 @@ import History from '../components/History';
 import PlayerTurn from '../components/PlayerTurn';
 import ResultModal from '../components/ResultModal';
 import { useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
+
+const socket = io.connect('http://localhost:3000');
 
 let GAME_BOARD = [
     [null, null, null],
@@ -66,6 +69,19 @@ export default function GamePage({}) {
         },
         currentTurn: 'player x',
     });
+
+    useEffect(() => {
+        socket.on('receive_move', (data) => {
+            const { rowIndex, colIndex, symbol } = data;
+            GAME_BOARD[rowIndex][colIndex] = symbol;
+            setTurn((prevState) => {
+                const newTurn = symbol === 'X' ? 'player o' : 'player x';
+                return { ...prevState, currentTurn: newTurn };
+            });
+            //alert(`row: ${rowIndex} col: ${colIndex} symbol: ${symbol}`);
+        });
+    }, [socket]);
+
     const dialogRef = useRef();
     const navigate = useNavigate();
 
@@ -92,6 +108,8 @@ export default function GamePage({}) {
             GAME_BOARD[rowIndex][colIndex] = symbol;
             const move = { row: rowIndex, col: colIndex, symbol };
             const newMoves = [...prevState.moves, move];
+
+            socket.emit('make_move', { rowIndex, colIndex, symbol });
 
             return { ...prevState, moves: newMoves, currentTurn: newTurn };
         });
