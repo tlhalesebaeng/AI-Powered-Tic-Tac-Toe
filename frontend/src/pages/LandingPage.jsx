@@ -2,6 +2,7 @@ import { useRef } from 'react';
 
 import Form from '../components/Form';
 import { useNavigate } from 'react-router-dom';
+import socket from '../../socket';
 
 export default function LandingPage() {
     const usernameRef = useRef();
@@ -13,6 +14,7 @@ export default function LandingPage() {
         if (username === '') {
             //add a flashing animation of the heading
         } else {
+            socket.emit('register', username.toLowerCase());
             localStorage.setItem('username', username);
             navigate('/type');
         }

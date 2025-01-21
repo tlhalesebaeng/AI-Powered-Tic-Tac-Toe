@@ -26,6 +26,10 @@ const router = createBrowserRouter([
                 element: <GamePage />,
             },
             {
+                path: '/game/:roomId',
+                element: <GamePage />,
+            },
+            {
                 path: '/type/online',
                 element: <CreateSession />,
             },

@@ -5,10 +5,8 @@ import GameBoard from '../components/GameBoard';
 import History from '../components/History';
 import PlayerTurn from '../components/PlayerTurn';
 import ResultModal from '../components/ResultModal';
-import { useNavigate } from 'react-router-dom';
-import io from 'socket.io-client';
-
-const socket = io.connect('http://localhost:3000');
+import { useNavigate, useParams } from 'react-router-dom';
+import socket from '../../socket';
 
 let GAME_BOARD = [
     [null, null, null],
@@ -78,12 +76,12 @@ export default function GamePage({}) {
                 const newTurn = symbol === 'X' ? 'player o' : 'player x';
                 return { ...prevState, currentTurn: newTurn };
             });
-            //alert(`row: ${rowIndex} col: ${colIndex} symbol: ${symbol}`);
         });
     }, [socket]);
 
     const dialogRef = useRef();
     const navigate = useNavigate();
+    const { roomId } = useParams();
 
     const { currentTurn, history } = turn;
     let winner = deriveWinner();
@@ -109,7 +107,12 @@ export default function GamePage({}) {
             const move = { row: rowIndex, col: colIndex, symbol };
             const newMoves = [...prevState.moves, move];
 
-            socket.emit('make_move', { rowIndex, colIndex, symbol });
+            socket.emit('make_move', {
+                rowIndex,
+                colIndex,
+                symbol,
+                room: roomId.toLowerCase(),
+            });
 
             return { ...prevState, moves: newMoves, currentTurn: newTurn };
         });

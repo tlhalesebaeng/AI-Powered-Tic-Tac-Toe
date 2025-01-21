@@ -1,21 +1,29 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Form from '../components/Form';
 import SessionModal from '../components/SessionModal';
+import socket from '../../socket';
 
 export default function CreateSession() {
     const opponentUsernameRef = useRef();
     const dialogRef = useRef();
     const navigate = useNavigate();
-    let timeout;
 
-    //to remove this
     const username = localStorage.getItem('username');
+    let opponentUsername;
+
+    useEffect(() => {
+        socket.on('receive_join_room', (data) => {
+            navigate(`/game/${opponentUsername}`);
+        });
+    }, [socket]);
+
+    let timeout;
 
     function handleSubmitOpponentUsername(event) {
         event.preventDefault();
-        const opponentUsername = opponentUsernameRef.current.value;
+        opponentUsername = opponentUsernameRef.current.value.toLowerCase();
         if (opponentUsername === '') {
             //add a flashing animation of the heading
         } else {
@@ -25,7 +33,11 @@ export default function CreateSession() {
             // }, 5000);
             //customize this alert
             //alert(`${username} wants to play`);
-            navigate('/game');
+
+            //we need to validate if there is no current user who has this username, if not
+            //join the room with the opponent username
+            socket.emit('join_room', opponentUsername);
+            navigate(`/game/${opponentUsername}`);
         }
     }
 

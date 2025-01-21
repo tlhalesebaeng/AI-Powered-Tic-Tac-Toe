@@ -14,11 +14,40 @@ const io = new Server(server, {
     },
 });
 
-io.on('connection', (socket) => {
-    console.log(socket.id);
+const users = {};
 
-    socket.on('make_move', (board) => {
-        socket.broadcast.emit('receive_move', board);
+io.on('connection', (socket) => {
+    //console.log(socket.id);
+
+    socket.on('register', (username) => {
+        users[username] = socket.id;
+    });
+
+    socket.on('join_room', (username) => {
+        socket.join(username);
+
+        const targetId = users[username];
+        if (targetId) {
+            socket.to(targetId).emit('receive_join_room');
+        }
+        //emit an event to mae a user with this username to join the room
+    });
+
+    socket.on('make_move', (details) => {
+        const targetId = users[details.room];
+        if (targetId) {
+            socket.to(targetId).emit('receive_move', details);
+        }
+    });
+
+    socket.on('disconnect', () => {
+        // Remove user on disconnect
+        for (const username in users) {
+            if (users[username] === socket.id) {
+                delete users[username];
+                break;
+            }
+        }
     });
 });
 
