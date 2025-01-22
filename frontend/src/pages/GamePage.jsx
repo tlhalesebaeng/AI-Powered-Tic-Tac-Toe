@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { WINNING_COMBINATIONS } from '../winning-combinations';
 import './GamePage.css';
 import GameBoard from '../components/GameBoard';
 import History from '../components/History';
 import PlayerTurn from '../components/PlayerTurn';
 import ResultModal from '../components/ResultModal';
-import { useNavigate, useParams } from 'react-router-dom';
 import socket from '../../socket';
 
 let GAME_BOARD = [
@@ -77,6 +77,19 @@ export default function GamePage({}) {
                 return { ...prevState, currentTurn: newTurn };
             });
         });
+
+        socket.on('receive_replay', (data) => {
+            resetBoard();
+            setTurn(data.newTurn);
+            dialogRef.current.close();
+        });
+
+        socket.on('receive_go_to_home', () => {
+            navigate('/type');
+            resetBoard();
+            setTurn(data.newTurn);
+            dialogRef.current.close();
+        });
     }, [socket]);
 
     const dialogRef = useRef();
@@ -129,6 +142,8 @@ export default function GamePage({}) {
                 newTurn.history['draw']++;
                 draw = '';
             }
+
+            socket.emit('replay', { newTurn, room: roomId.toLowerCase() });
             return newTurn;
         });
 
@@ -137,14 +152,19 @@ export default function GamePage({}) {
 
     function handleGoToHome() {
         navigate('/type');
-        setTurn({
-            moves: [],
-            history: {
-                X: 0,
-                draw: 0,
-                O: 0,
-            },
-            currentTurn: 'player x',
+        setTurn(() => {
+            const newTurn = {
+                moves: [],
+                history: {
+                    X: 0,
+                    draw: 0,
+                    O: 0,
+                },
+                currentTurn: 'player x',
+            };
+            socket.emit('go_to_home', { newTurn, room: roomId.toLowerCase() });
+
+            return newTurn;
         });
         resetBoard();
         dialogRef.current.close();

@@ -11,11 +11,11 @@ export default function CreateSession() {
     const navigate = useNavigate();
 
     const username = localStorage.getItem('username');
-    let opponentUsername;
 
     useEffect(() => {
         socket.on('receive_join_room', (data) => {
-            navigate(`/game/${opponentUsername}`);
+            socket.emit('join_room', data);
+            navigate(`/game/${data}`);
         });
     }, [socket]);
 
@@ -23,7 +23,8 @@ export default function CreateSession() {
 
     function handleSubmitOpponentUsername(event) {
         event.preventDefault();
-        opponentUsername = opponentUsernameRef.current.value.toLowerCase();
+        const opponentUsername =
+            opponentUsernameRef.current.value.toLowerCase();
         if (opponentUsername === '') {
             //add a flashing animation of the heading
         } else {
