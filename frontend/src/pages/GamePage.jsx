@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { WINNING_COMBINATIONS } from '../winning-combinations';
 import './GamePage.css';
@@ -7,6 +7,7 @@ import History from '../components/History';
 import PlayerTurn from '../components/PlayerTurn';
 import ResultModal from '../components/ResultModal';
 import socket from '../../socket';
+import { GameContext } from '../store/game-context';
 
 let GAME_BOARD = [
     [null, null, null],
@@ -57,7 +58,7 @@ function resetBoard() {
     }
 }
 
-export default function GamePage({}) {
+export default function GamePage() {
     const [turn, setTurn] = useState({
         moves: [],
         history: {
@@ -65,7 +66,7 @@ export default function GamePage({}) {
             draw: 0,
             O: 0,
         },
-        currentTurn: 'player x',
+        currentTurn: 'player-x',
     });
 
     useEffect(() => {
@@ -73,7 +74,7 @@ export default function GamePage({}) {
             const { rowIndex, colIndex, symbol } = data;
             GAME_BOARD[rowIndex][colIndex] = symbol;
             setTurn((prevState) => {
-                const newTurn = symbol === 'X' ? 'player o' : 'player x';
+                const newTurn = symbol === 'X' ? 'player-o' : 'player-x';
                 return { ...prevState, currentTurn: newTurn };
             });
         });
@@ -95,8 +96,11 @@ export default function GamePage({}) {
     const dialogRef = useRef();
     const navigate = useNavigate();
     const { roomId } = useParams();
+    const { userDetails, gameType } = useContext(GameContext);
 
     const { currentTurn, history } = turn;
+    const disableButton = userDetails.symbol !== currentTurn;
+
     let winner = deriveWinner();
     let draw = hasDraw();
 
@@ -114,18 +118,20 @@ export default function GamePage({}) {
     function handleCurrentTurn(rowIndex, colIndex) {
         setTurn((prevState) => {
             const newTurn =
-                prevState.currentTurn === 'player x' ? 'player o' : 'player x';
-            const symbol = prevState.currentTurn === 'player x' ? 'X' : 'O';
+                prevState.currentTurn === 'player-x' ? 'player-o' : 'player-x';
+            const symbol = prevState.currentTurn === 'player-x' ? 'X' : 'O';
             GAME_BOARD[rowIndex][colIndex] = symbol;
             const move = { row: rowIndex, col: colIndex, symbol };
             const newMoves = [...prevState.moves, move];
 
-            socket.emit('make_move', {
-                rowIndex,
-                colIndex,
-                symbol,
-                room: roomId.toLowerCase(),
-            });
+            if (gameType === 'online multiplayer') {
+                socket.emit('make_move', {
+                    rowIndex,
+                    colIndex,
+                    symbol,
+                    room: roomId.toLowerCase(),
+                });
+            }
 
             return { ...prevState, moves: newMoves, currentTurn: newTurn };
         });
@@ -134,7 +140,7 @@ export default function GamePage({}) {
     function handleReplay() {
         resetBoard();
         setTurn((prevState) => {
-            const newTurn = { ...prevState, currentTurn: 'player x' };
+            const newTurn = { ...prevState, currentTurn: 'player-x' };
             if (winner) {
                 newTurn.history[winner]++;
                 winner = '';
@@ -143,7 +149,9 @@ export default function GamePage({}) {
                 draw = '';
             }
 
-            socket.emit('replay', { newTurn, room: roomId.toLowerCase() });
+            if (gameType === 'online multiplayer') {
+                socket.emit('replay', { newTurn, room: roomId.toLowerCase() });
+            }
             return newTurn;
         });
 
@@ -160,9 +168,14 @@ export default function GamePage({}) {
                     draw: 0,
                     O: 0,
                 },
-                currentTurn: 'player x',
+                currentTurn: 'player-x',
             };
-            socket.emit('go_to_home', { newTurn, room: roomId.toLowerCase() });
+            if (gameType === 'online multiplayer') {
+                socket.emit('go_to_home', {
+                    newTurn,
+                    room: roomId.toLowerCase(),
+                });
+            }
 
             return newTurn;
         });
@@ -183,6 +196,7 @@ export default function GamePage({}) {
                 <GameBoard
                     onSelectSquare={handleCurrentTurn}
                     board={GAME_BOARD}
+                    disableButton={disableButton}
                 />
                 <PlayerTurn turn={currentTurn} />
             </div>

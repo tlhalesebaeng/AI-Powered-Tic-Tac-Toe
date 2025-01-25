@@ -2,10 +2,21 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(cors()); //allows the frontend to communicate with the socket.io server
 const server = http.createServer(app);
+
+// ---------------Deployment------------
+
+const __dirname1 = path.resolve();
+app.use(express.static(path.join(__dirname1, '../frontend/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname1, 'frontend', 'dist', 'index.html'));
+});
+
+// ---------------Deployment------------
 
 const io = new Server(server, {
     cors: {
@@ -24,14 +35,30 @@ io.on('connection', (socket) => {
         users[username] = socket.id;
     });
 
-    socket.on('join_room', (username) => {
-        // join the two users on join_room
+    socket.on('join_room', (details) => {
+        const { opponentUsername } = details;
+        socket.join(opponentUsername);
+
+        //get the socket id of the user with the opponent username and emit the receive_join_room event to them
+        const targetId = users[opponentUsername];
+        if (targetId) {
+            //request the opponent to join the room
+            socket.to(targetId).emit('receive_join_room_request', details);
+        } else {
+            //socket.to(users[username]).emit('receive_join_room_error');
+        }
+    });
+
+    socket.on('join_room_accept', (details) => {
+        const { username, opponentUsername } = details;
         socket.join(username);
 
-        //get the socket id of the user with this username and emit the receive_join_room event to them
-        const targetId = users[username];
+        const targetId = users[opponentUsername];
         if (targetId) {
-            socket.to(targetId).emit('receive_join_room', username);
+            //socket.to(targetId).emit('receive_join_room', details);
+            socket.to(targetId).emit('receive_join_room', details);
+        } else {
+            //socket.to(users[username]).emit('receive_join_room_error');
         }
     });
 

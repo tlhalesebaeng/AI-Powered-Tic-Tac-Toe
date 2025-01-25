@@ -1,8 +1,10 @@
-import { forwardRef } from 'react';
+import { forwardRef, useContext } from 'react';
 import './Form.css';
+import { GameContext } from '../store/game-context';
 
 const Form = forwardRef(function Form({ onSubmit, formType }, ref) {
-    const username = localStorage.getItem('username');
+    const { userDetails } = useContext(GameContext);
+    const username = userDetails.name;
 
     return (
         <form className="container column">

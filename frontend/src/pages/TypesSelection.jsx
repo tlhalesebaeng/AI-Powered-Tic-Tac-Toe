@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import MarkSelection from '../components/MarkSelection.jsx';
 import GameType from '../components/GameType';
 import './TypesSelection.css';
+import socket from '../../socket';
+import { GameContext } from '../store/game-context.jsx';
 
 const DETAILS = {
     selectedMark: 'player-x',
@@ -13,6 +15,7 @@ const DETAILS = {
 export default function TypesSelection() {
     const [selectedDetails, setSelectedDetails] = useState(DETAILS);
     const navigate = useNavigate();
+    const { setUserDetails, setGameType } = useContext(GameContext);
 
     const { selectedMark, selectedGameType } = selectedDetails;
 
@@ -21,8 +24,8 @@ export default function TypesSelection() {
             ...prevState,
             selectedGameType: gameType,
         }));
+        setGameType(gameType);
         if (gameType === 'online multiplayer') {
-            //navigate to looking for a player
             navigate('/type/online');
         } else if (gameType === 'player to player') {
             navigate('/game');
@@ -30,10 +33,15 @@ export default function TypesSelection() {
     }
 
     function handleSelectedMark(player) {
-        setSelectedDetails((prevState) => ({
-            ...prevState,
-            selectedMark: player,
-        }));
+        setUserDetails((prevDetails) => {
+            return { ...prevDetails, symbol: player };
+        });
+        setSelectedDetails((prevDetails) => {
+            return {
+                ...prevDetails,
+                selectedMark: player,
+            };
+        });
     }
 
     return (

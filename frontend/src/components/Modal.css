@@ -10,14 +10,14 @@ dialog[open] {
     flex-direction: column;
     align-items: center;
     height: fit-content;
-    width: 250px;
+    width: 270px;
     border: none;
-    padding: 20px;
+    padding: 23px;
     box-sizing: border-box;
     border-radius: 5px;
 }
 dialog h2 {
-    margin-bottom: 10px;
+    margin-bottom: 18px;
     color: black;
     font-size: 20px;
 }
@@ -29,7 +29,7 @@ dialog div {
 }
 
 dialog div button {
-    height: 25px;
+    height: 28px;
     flex: 1;
     margin: 2.5px;
     font-family: 'Fredoka';
