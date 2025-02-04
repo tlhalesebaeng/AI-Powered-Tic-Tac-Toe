@@ -33,6 +33,7 @@ io.on('connection', (socket) => {
     socket.on('register', (username) => {
         //pair the username to the socket id on register
         users[username] = socket.id;
+        console.log(`${username} registered with ID ${users[username]}`);
     });
 
     socket.on('join_room', (details) => {
@@ -89,6 +90,7 @@ io.on('connection', (socket) => {
         // Remove user on disconnect
         for (const username in users) {
             if (users[username] === socket.id) {
+                console.log(`${username} disconnected...`);
                 delete users[username];
                 break;
             }
