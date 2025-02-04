@@ -36,16 +36,24 @@ io.on('connection', (socket) => {
     });
 
     socket.on('join_room', (details) => {
-        const { opponentUsername } = details;
-        socket.join(opponentUsername);
+        const { requester, opponentUsername } = details;
 
         //get the socket id of the user with the opponent username and emit the receive_join_room event to them
         const targetId = users[opponentUsername];
+
+        //get the socket id of the user requesting a match
+        const requesterId = users[requester];
+
         if (targetId) {
             //request the opponent to join the room
+            socket.join(opponentUsername);
             socket.to(targetId).emit('receive_join_room_request', details);
         } else {
-            //socket.to(users[username]).emit('receive_join_room_error');
+            //emit an error to the user requesting a match
+
+            //this does not work, maybe when i emit an event to myself
+            //the socket object does not change, hence not tell useEffect to re execute the component
+            socket.to(requesterId).emit('receive_join_room_error', details);
         }
     });
 

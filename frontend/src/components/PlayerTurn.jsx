@@ -1,12 +1,15 @@
 import { useContext } from 'react';
 import './PlayerTurn.css';
 import { GameContext } from '../store/game-context';
+import { DetailsContext } from '../store/details-context';
 
 export default function PlayerTurn({ turn }) {
-    const { userDetails, gameType } = useContext(GameContext);
+    const { gameType } = useContext(GameContext);
+    const { details } = useContext(DetailsContext);
+
     let turnValue = turn === 'player-x' ? "X's" : "O's";
     if (gameType === 'online multiplayer') {
-        if (userDetails.symbol === turn) {
+        if (details.userSymbol === turn) {
             turnValue = 'Your';
         }
     }

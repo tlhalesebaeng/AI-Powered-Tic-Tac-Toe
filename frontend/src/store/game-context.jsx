@@ -1,24 +1,14 @@
 import { createContext, useState } from 'react';
 
 export const GameContext = createContext({
-    userDetails: {},
-    setUserDetails: () => {},
-    opponentDetails: {},
-    setOpponentDetails: () => {},
     gameType: '',
     setGameType: () => {},
 });
 
-function GameContextProvider({ children }) {
-    const [userDetails, setUserDetails] = useState({});
-    const [opponentDetails, setOpponentDetails] = useState({});
+export default function GameContextProvider({ children }) {
     const [gameType, setGameType] = useState('');
 
     const contextValue = {
-        userDetails,
-        setUserDetails,
-        opponentDetails,
-        setOpponentDetails,
         gameType,
         setGameType,
     };
@@ -28,5 +18,3 @@ function GameContextProvider({ children }) {
         </GameContext.Provider>
     );
 }
-
-export default GameContextProvider;

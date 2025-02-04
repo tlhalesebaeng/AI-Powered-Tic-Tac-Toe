@@ -4,17 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import Form from '../components/Form';
 import SessionModal from '../components/SessionModal';
 import socket from '../../socket';
-import { GameContext } from '../store/game-context';
+import { DetailsContext } from '../store/details-context';
 
 export default function CreateSession() {
     const [modalType, setModalType] = useState('awaiting-confirmation');
     const opponentUsernameRef = useRef();
     const dialogRef = useRef();
     const navigate = useNavigate();
+    const { details, addOpponent, addUser } = useContext(DetailsContext);
 
-    const { userDetails, opponentDetails, setUserDetails, setOpponentDetails } =
-        useContext(GameContext);
-    const username = userDetails.name;
+    let heading;
+    const username = details.username;
+
     if (!username) {
         //username is not defined here
         //do something
@@ -25,13 +26,9 @@ export default function CreateSession() {
             //Here the opponentUsername is the value of userDetails.name
             const { username, mySymbol, opponentSymbol } = data;
 
-            setUserDetails((prevState) => {
-                return { ...prevState, symbol: opponentSymbol };
-            });
+            addUser(details.username, opponentSymbol);
+            addOpponent(username, mySymbol);
 
-            setOpponentDetails({ name: username, symbol: mySymbol });
-
-            //socket.emit('join_room', data);
             navigate(`/game/${username}`);
         });
 
@@ -40,44 +37,25 @@ export default function CreateSession() {
             const { requester, yourSymbol, requesterSymbol } = data;
 
             //The symbol here is the symbol of the user that requested a game
-            setOpponentDetails({ name: requester, symbol: requesterSymbol });
-            setUserDetails((prevDetails) => {
-                return { ...prevDetails, symbol: yourSymbol };
-            });
+            addOpponent(requester, requesterSymbol);
+            addUser(details.username, yourSymbol);
+
+            setModalType('game-request');
 
             dialogRef.current.open();
-            setModalType('game-request');
+        });
+
+        socket.on('receive_join_room_error', (data) => {
+            const { opponentUsername } = data;
+            const heading = `${opponentUsername} does not exist!`;
+            console.log(heading);
+            //dialog.current.open();
         });
     }, [socket]);
 
-    let timeout;
-    let opponentUsername;
-
     function handleSubmitOpponentUsername(event) {
-        event.preventDefault();
-        opponentUsername = opponentUsernameRef.current.value
-            .trim()
-            .toLowerCase();
-        if (opponentUsername === '') {
-            //add a flashing animation of the heading
-        } else {
-            const opponentSymbol =
-                userDetails.symbol === 'player-x' ? 'player-o' : 'player-x';
-
-            //request the opponent to join the room
-            socket.emit('join_room', {
-                requester: username,
-                requesterSymbol: userDetails.symbol,
-                yourSymbol: opponentSymbol,
-                opponentUsername,
-            });
-
-            setOpponentDetails(() => {
-                return { name: opponentUsername, symbol: opponentSymbol };
-            });
-
-            dialogRef.current.open();
-        }
+        opponentUsernameRef.current.submitOpponentUsername(event);
+        //dialogRef.current.open();
     }
 
     function handleRetry() {
@@ -86,7 +64,6 @@ export default function CreateSession() {
 
     function handleCancel() {
         dialogRef.current.close();
-        clearTimeout(timeout);
         navigate('/type');
     }
 
@@ -96,30 +73,17 @@ export default function CreateSession() {
         //accept the join room request
         socket.emit('join_room_accept', {
             username,
-            mySymbol: userDetails.symbol,
-            opponentUsername: opponentDetails.name,
-            opponentSymbol: opponentDetails.symbol,
+            mySymbol: details.userSymbol,
+            opponentUsername: details.opponentUsername,
+            opponentSymbol: details.opponentSymbol,
         });
         navigate(`/game/${username}`);
     }
 
-    //convert the first letter of the opponents name to a capital letter
-    // if (opponentDetails.name) {
-    //     const nameSplitted = opponentDetails.name.split('');
-    //     let tempName = '';
-    //     for (const i = 0; i < nameSplitted.length; i++) {
-    //         if (i === 0) {
-    //             tempName += nameSplitted[i].toUpperCase();
-    //         } else {
-    //             tempName += nameSplitted[i];
-    //         }
-    //     }
-    // }
-
-    const heading =
+    heading =
         modalType === 'awaiting-confirmation'
             ? 'Loading...'
-            : `${opponentDetails.name} wants to play`;
+            : `${details.opponentUsername} wants to play`;
 
     const modalDetails = {
         onRetry: handleRetry,
@@ -131,11 +95,12 @@ export default function CreateSession() {
 
     return (
         <>
-            <SessionModal ref={dialogRef} modalDetails={modalDetails} />
+            <SessionModal ref={dialogRef} {...modalDetails} />
             <Form
-                formType="opp username"
+                title="Write opponent username"
                 ref={opponentUsernameRef}
                 onSubmit={handleSubmitOpponentUsername}
+                renderUsername={true}
             />
         </>
     );

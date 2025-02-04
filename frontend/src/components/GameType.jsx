@@ -1,12 +1,17 @@
+import { useContext } from 'react';
+import { GameContext } from '../store/game-context.jsx';
+
 import './GameType.css';
 
-export default function GameType({ selectedGameType, onSelectGameType }) {
+export default function GameType({ onSelectGameType }) {
+    const { gameType } = useContext(GameContext);
+
     return (
         <div className="game-type column">
             <button
                 onClick={() => onSelectGameType('online multiplayer')}
                 className={`btn-select-game-type player-x-color ${
-                    selectedGameType === 'online multiplayer'
+                    gameType === 'online multiplayer'
                         ? 'selected-game-type'
                         : null
                 }`}
@@ -17,7 +22,7 @@ export default function GameType({ selectedGameType, onSelectGameType }) {
                 <button
                     onClick={() => onSelectGameType('single player')}
                     className={`btn-select-game-type draw-color ${
-                        selectedGameType === 'single player'
+                        gameType === 'single player'
                             ? 'selected-game-type'
                             : null
                     }`}
@@ -28,7 +33,7 @@ export default function GameType({ selectedGameType, onSelectGameType }) {
             <button
                 onClick={() => onSelectGameType('player to player')}
                 className={`btn-select-game-type player-o-color ${
-                    selectedGameType === 'player to player'
+                    gameType === 'player to player'
                         ? 'selected-game-type'
                         : null
                 }`}

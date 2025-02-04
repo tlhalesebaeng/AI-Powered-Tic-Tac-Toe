@@ -1,12 +1,11 @@
-import { useRef, forwardRef, useImperativeHandle } from 'react';
+import { useRef, forwardRef, useImperativeHandle, useContext } from 'react';
 import { createPortal } from 'react-dom';
-
+import { GameContext } from '../store/game-context';
 import './Modal.css';
 
-const Modal = forwardRef(function Modal({ details, children }, ref) {
+const Modal = forwardRef(function Modal({ result, children }, ref) {
     const dialog = useRef();
-
-    const { result, gameType } = details;
+    const { gameType } = useContext(GameContext);
 
     useImperativeHandle(ref, () => {
         return {

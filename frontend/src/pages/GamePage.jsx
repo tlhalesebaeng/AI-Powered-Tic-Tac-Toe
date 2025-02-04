@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { WINNING_COMBINATIONS } from '../winning-combinations';
 import './GamePage.css';
 import GameBoard from '../components/GameBoard';
 import History from '../components/History';
@@ -8,55 +7,14 @@ import PlayerTurn from '../components/PlayerTurn';
 import ResultModal from '../components/ResultModal';
 import socket from '../../socket';
 import { GameContext } from '../store/game-context';
+import { DetailsContext } from '../store/details-context';
+import { deriveWinner, hasDraw, resetBoard } from '../controllers';
 
 let GAME_BOARD = [
     [null, null, null],
     [null, null, null],
     [null, null, null],
 ];
-
-function deriveWinner() {
-    let winner;
-
-    for (const combination of WINNING_COMBINATIONS) {
-        const firstSymbol = GAME_BOARD[combination[0].row][combination[0].col];
-        const secondSymbol = GAME_BOARD[combination[1].row][combination[1].col];
-        const thirdSymbol = GAME_BOARD[combination[2].row][combination[2].col];
-
-        if (firstSymbol !== null) {
-            if (
-                firstSymbol === secondSymbol &&
-                firstSymbol === thirdSymbol &&
-                secondSymbol === thirdSymbol
-            ) {
-                winner = firstSymbol;
-            }
-        }
-    }
-
-    return winner;
-}
-
-function hasDraw() {
-    for (let row = 0; row < GAME_BOARD.length; row++) {
-        for (let col = 0; col < GAME_BOARD.length; col++) {
-            if (GAME_BOARD[row][col] === null) {
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
-function resetBoard() {
-    const len = GAME_BOARD.length;
-    for (let r = 0; r < len; r++) {
-        for (let c = 0; c < len; c++) {
-            GAME_BOARD[r][c] = null;
-        }
-    }
-}
 
 export default function GamePage() {
     const [turn, setTurn] = useState({
@@ -69,6 +27,12 @@ export default function GamePage() {
         currentTurn: 'player-x',
     });
 
+    const dialogRef = useRef();
+    const navigate = useNavigate();
+    const { roomId } = useParams();
+    const { gameType } = useContext(GameContext);
+    const { details } = useContext(DetailsContext);
+
     useEffect(() => {
         socket.on('receive_move', (data) => {
             const { rowIndex, colIndex, symbol } = data;
@@ -80,29 +44,24 @@ export default function GamePage() {
         });
 
         socket.on('receive_replay', (data) => {
-            resetBoard();
+            GAME_BOARD = resetBoard();
             setTurn(data.newTurn);
             dialogRef.current.close();
         });
 
         socket.on('receive_go_to_home', () => {
             navigate('/type');
-            resetBoard();
+            GAME_BOARD = resetBoard();
             setTurn(data.newTurn);
             dialogRef.current.close();
         });
     }, [socket]);
 
-    const dialogRef = useRef();
-    const navigate = useNavigate();
-    const { roomId } = useParams();
-    const { userDetails, gameType } = useContext(GameContext);
-
     const { currentTurn, history } = turn;
-    const disableButton = userDetails.symbol !== currentTurn;
+    const disableButton = details.userSymbol !== currentTurn;
 
-    let winner = deriveWinner();
-    let draw = hasDraw();
+    let winner = deriveWinner(GAME_BOARD);
+    let draw = hasDraw(GAME_BOARD);
 
     let result;
     if (winner) {
@@ -138,7 +97,7 @@ export default function GamePage() {
     }
 
     function handleReplay() {
-        resetBoard();
+        GAME_BOARD = resetBoard();
         setTurn((prevState) => {
             const newTurn = { ...prevState, currentTurn: 'player-x' };
             if (winner) {
@@ -179,7 +138,7 @@ export default function GamePage() {
 
             return newTurn;
         });
-        resetBoard();
+        GAME_BOARD = resetBoard();
         dialogRef.current.close();
     }
 

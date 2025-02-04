@@ -1,29 +1,24 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect } from 'react';
 import Modal from './Modal';
 import './SessionModal.css';
-import { useNavigate } from 'react-router-dom';
 import socket from '../../socket';
 
-const SessionModal = forwardRef(function SessionModal({ modalDetails }, ref) {
-    const navigate = useNavigate();
+const SessionModal = forwardRef(function SessionModal(
+    { onCancel, onAccept, heading, modalType },
+    ref
+) {
+    // useEffect(() => {
+    //     socket.on('receive_join_room_error', () => {
+    //         console.log('oops user is not there');
+    //     });
+    // }, [socket]);
 
-    const { onRetry, onCancel, onAccept, heading, modalType } = modalDetails;
+    const result = 'draw'; //used to show the draw-color
 
-    useEffect(() => {
-        socket.on('receive_join_room_error', () => {
-            console.log('oops user is not there');
-        });
-    }, [socket]);
-
-    const details = {
-        gameType: 'online multiplayer',
-        result: 'draw',
-    };
-
-    //<button onClick={onRetry}>Retry</button>
+    //<button onClick={onRetry}>Retry</button> show this when the user is not found
 
     return (
-        <Modal details={details} ref={ref}>
+        <Modal result={result} ref={ref}>
             <h2>{heading}</h2>
             <div>
                 {modalType !== 'awaiting-confirmation' && (

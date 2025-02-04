@@ -1,29 +1,17 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import MarkSelection from '../components/MarkSelection.jsx';
 import GameType from '../components/GameType';
 import './TypesSelection.css';
-import socket from '../../socket';
 import { GameContext } from '../store/game-context.jsx';
-
-const DETAILS = {
-    selectedMark: 'player-x',
-    selectedGameType: '',
-};
+import { DetailsContext } from '../store/details-context.jsx';
 
 export default function TypesSelection() {
-    const [selectedDetails, setSelectedDetails] = useState(DETAILS);
     const navigate = useNavigate();
-    const { setUserDetails, setGameType } = useContext(GameContext);
-
-    const { selectedMark, selectedGameType } = selectedDetails;
+    const { setGameType } = useContext(GameContext);
+    const { details, addUser } = useContext(DetailsContext);
 
     function handleGameType(gameType) {
-        setSelectedDetails((prevState) => ({
-            ...prevState,
-            selectedGameType: gameType,
-        }));
         setGameType(gameType);
         if (gameType === 'online multiplayer') {
             navigate('/type/online');
@@ -33,15 +21,7 @@ export default function TypesSelection() {
     }
 
     function handleSelectedMark(player) {
-        setUserDetails((prevDetails) => {
-            return { ...prevDetails, symbol: player };
-        });
-        setSelectedDetails((prevDetails) => {
-            return {
-                ...prevDetails,
-                selectedMark: player,
-            };
-        });
+        addUser(details.name, player);
     }
 
     return (
@@ -50,14 +30,8 @@ export default function TypesSelection() {
                 <span className="X">X</span>
                 <span className="O">O</span>
             </h2>
-            <MarkSelection
-                selectedMark={selectedMark}
-                onSelectMark={handleSelectedMark}
-            />
-            <GameType
-                selectedGameType={selectedGameType}
-                onSelectGameType={handleGameType}
-            />
+            <MarkSelection onSelectMark={handleSelectedMark} />
+            <GameType onSelectGameType={handleGameType} />
         </div>
     );
 }

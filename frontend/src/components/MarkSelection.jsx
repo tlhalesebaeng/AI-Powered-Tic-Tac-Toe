@@ -1,6 +1,10 @@
+import { useContext } from 'react';
+import { DetailsContext } from '../store/details-context';
 import './MarkSelection.css';
 
-export default function MarkSelection({ selectedMark, onSelectMark }) {
+export default function MarkSelection({ onSelectMark }) {
+    const { details } = useContext(DetailsContext);
+
     return (
         <div className="mark-selection-container column">
             <h2>Select player 1's mark</h2>
@@ -8,9 +12,9 @@ export default function MarkSelection({ selectedMark, onSelectMark }) {
                 <button
                     onClick={() => onSelectMark('player-x')}
                     className={`${
-                        selectedMark !== 'player-x'
-                            ? 'not-selected-mark'
-                            : 'selected-mark'
+                        details.userSymbol === 'player-x'
+                            ? 'selected-mark'
+                            : 'not-selected-mark'
                     }  X`}
                 >
                     X
@@ -18,9 +22,9 @@ export default function MarkSelection({ selectedMark, onSelectMark }) {
                 <button
                     onClick={() => onSelectMark('player-o')}
                     className={`${
-                        selectedMark !== 'player-o'
-                            ? 'not-selected-mark'
-                            : 'selected-mark'
+                        details.userSymbol === 'player-o'
+                            ? 'selected-mark'
+                            : 'not-selected-mark'
                     }  O`}
                 >
                     0
