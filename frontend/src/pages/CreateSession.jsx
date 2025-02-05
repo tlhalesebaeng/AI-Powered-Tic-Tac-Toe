@@ -55,7 +55,7 @@ export default function CreateSession() {
 
     function handleSubmitOpponentUsername(event) {
         opponentUsernameRef.current.submitOpponentUsername(event);
-        //dialogRef.current.open();
+        dialogRef.current.open();
     }
 
     function handleRetry() {

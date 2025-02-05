@@ -1,4 +1,4 @@
-import { forwardRef, useContext, useEffect } from 'react';
+import { forwardRef, useContext } from 'react';
 import './ResultModal.css';
 import Modal from './Modal';
 import { DetailsContext } from '../store/details-context';
