@@ -31,7 +31,7 @@ First, download the project files by cloning the repository:
 
 ```bash
 git clone https://github.com/tlhalesebaeng/AI-Powered-Tic-Tac-Toe
-cd tic-tac-toe-multiplayer-ai
+cd AI-Powered-Tic-Tac-Toe
 ```
 
 ### 2️⃣ Set Up the Backend
