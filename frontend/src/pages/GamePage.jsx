@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import Minimax from 'tic-tac-toe-minimax';
 import './GamePage.css';
 import GameBoard from '../components/GameBoard';
 import History from '../components/History';
@@ -32,6 +33,9 @@ export default function GamePage() {
     const { roomId } = useParams();
     const { gameType } = useContext(GameContext);
     const { details } = useContext(DetailsContext);
+    const [disableButton, setDisableButton] = useState(
+        details.userSymbol !== turn.currentTurn
+    );
 
     useEffect(() => {
         socket.on('receive_move', (data) => {
@@ -58,7 +62,6 @@ export default function GamePage() {
     }, [socket]);
 
     const { currentTurn, history } = turn;
-    const disableButton = details.userSymbol !== currentTurn;
 
     let winner = deriveWinner(GAME_BOARD);
     let draw = hasDraw(GAME_BOARD);
@@ -76,12 +79,12 @@ export default function GamePage() {
 
     function handleCurrentTurn(rowIndex, colIndex) {
         setTurn((prevState) => {
-            const newTurn =
+            let newTurn =
                 prevState.currentTurn === 'player-x' ? 'player-o' : 'player-x';
             const symbol = prevState.currentTurn === 'player-x' ? 'X' : 'O';
             GAME_BOARD[rowIndex][colIndex] = symbol;
             const move = { row: rowIndex, col: colIndex, symbol };
-            const newMoves = [...prevState.moves, move];
+            let newMoves = [...prevState.moves, move];
 
             if (gameType === 'online multiplayer') {
                 socket.emit('make_move', {
@@ -90,6 +93,35 @@ export default function GamePage() {
                     symbol,
                     room: roomId.toLowerCase(),
                 });
+            }
+
+            if (
+                gameType === 'single player' &&
+                newTurn === details.opponentSymbol
+            ) {
+                setDisableButton(true);
+                const board = GAME_BOARD.flat();
+                for (let i = 0; i < board.length; i++) {
+                    if (!board[i]) {
+                        board[i] = i;
+                    }
+                }
+                const aiSymbol = symbol === 'X' ? 'O' : 'X';
+                const symbols = {
+                    huPlayer: symbol,
+                    aiPlayer: aiSymbol,
+                };
+
+                const nextMove = Minimax.ComputerMove(board, symbols, 'Hard');
+
+                const r = Math.floor(nextMove / 3);
+                const c = nextMove % 3;
+
+                if (nextMove !== undefined) {
+                    GAME_BOARD[r][c] = aiSymbol;
+                }
+
+                newTurn = 'player-x';
             }
 
             return { ...prevState, moves: newMoves, currentTurn: newTurn };

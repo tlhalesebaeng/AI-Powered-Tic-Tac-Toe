@@ -11,7 +11,7 @@ export default function GameBoard({ onSelectSquare, board, disableButton }) {
                 <li key={rowIndex}>
                     <ul className="board-rows">
                         {row.map((playerSymbol, colIndex) => {
-                            let disableButtonCheck;
+                            let disableButtonCheck = disableButton;
                             if (gameType === 'online multiplayer') {
                                 if (disableButton) {
                                     disableButtonCheck = true;

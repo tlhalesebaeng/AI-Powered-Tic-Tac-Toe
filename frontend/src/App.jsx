@@ -34,7 +34,7 @@ const router = createBrowserRouter([
                 element: <CreateSession />,
             },
             {
-                path: '/type/ai',
+                path: '/type/ai/game',
                 element: <GamePage />,
             },
         ],

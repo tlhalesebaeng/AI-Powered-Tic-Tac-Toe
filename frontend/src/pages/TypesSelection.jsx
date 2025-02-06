@@ -9,7 +9,7 @@ import { DetailsContext } from '../store/details-context.jsx';
 export default function TypesSelection() {
     const navigate = useNavigate();
     const { setGameType } = useContext(GameContext);
-    const { details, addUser } = useContext(DetailsContext);
+    const { details, addUser, addOpponent } = useContext(DetailsContext);
 
     function handleGameType(gameType) {
         setGameType(gameType);
@@ -18,7 +18,10 @@ export default function TypesSelection() {
         } else if (gameType === 'player to player') {
             navigate('/game');
         } else if (gameType === 'single player') {
-            navigate('/type/ai');
+            const aiSymbol =
+                details.userSymbol === 'player-x' ? 'player-o' : 'player-x';
+            addOpponent('AI', aiSymbol);
+            navigate('/type/ai/game');
         }
     }
 
