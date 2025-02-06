@@ -17,6 +17,8 @@ export default function TypesSelection() {
             navigate('/type/online');
         } else if (gameType === 'player to player') {
             navigate('/game');
+        } else if (gameType === 'single player') {
+            navigate('/type/ai');
         }
     }
 

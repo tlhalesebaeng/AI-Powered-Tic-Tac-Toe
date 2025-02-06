@@ -18,18 +18,14 @@ export default function GameType({ onSelectGameType }) {
             >
                 Online Multiplayer
             </button>
-            {false && (
-                <button
-                    onClick={() => onSelectGameType('single player')}
-                    className={`btn-select-game-type draw-color ${
-                        gameType === 'single player'
-                            ? 'selected-game-type'
-                            : null
-                    }`}
-                >
-                    Single player(vs AI)
-                </button>
-            )}
+            <button
+                onClick={() => onSelectGameType('single player')}
+                className={`btn-select-game-type draw-color ${
+                    gameType === 'single player' ? 'selected-game-type' : null
+                }`}
+            >
+                Single player(vs AI)
+            </button>
             <button
                 onClick={() => onSelectGameType('player to player')}
                 className={`btn-select-game-type player-o-color ${

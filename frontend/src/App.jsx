@@ -33,6 +33,10 @@ const router = createBrowserRouter([
                 path: '/type/online',
                 element: <CreateSession />,
             },
+            {
+                path: '/type/ai',
+                element: <GamePage />,
+            },
         ],
     },
 ]);
