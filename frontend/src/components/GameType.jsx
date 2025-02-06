@@ -24,7 +24,7 @@ export default function GameType({ onSelectGameType }) {
                     gameType === 'single player' ? 'selected-game-type' : null
                 }`}
             >
-                Single player(vs AI)
+                Single Player (AI Mode)
             </button>
             <button
                 onClick={() => onSelectGameType('player to player')}
@@ -34,7 +34,7 @@ export default function GameType({ onSelectGameType }) {
                         : null
                 }`}
             >
-                Player to Player
+                Local Multiplayer
             </button>
         </div>
     );
