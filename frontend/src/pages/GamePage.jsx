@@ -30,7 +30,7 @@ export default function GamePage() {
 
     const dialogRef = useRef();
     const navigate = useNavigate();
-    const { roomId } = useParams();
+    const { roomId, difficulty } = useParams();
     const { gameType } = useContext(GameContext);
     const { details } = useContext(DetailsContext);
     const [disableButton, setDisableButton] = useState(
@@ -112,7 +112,10 @@ export default function GamePage() {
                     aiPlayer: aiSymbol,
                 };
 
-                const nextMove = Minimax.ComputerMove(board, symbols, 'Hard');
+                const diff =
+                    difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
+
+                const nextMove = Minimax.ComputerMove(board, symbols, diff);
 
                 const r = Math.floor(nextMove / 3);
                 const c = nextMove % 3;

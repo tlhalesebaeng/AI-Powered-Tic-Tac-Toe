@@ -6,6 +6,7 @@ import RootLayout from './pages/RootLayout.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import TypesSelection from './pages/TypesSelection.jsx';
 import CreateSession from './pages/CreateSession.jsx';
+import DifficultySelection from './pages/DifficultySelection.jsx';
 
 const router = createBrowserRouter([
     {
@@ -34,7 +35,11 @@ const router = createBrowserRouter([
                 element: <CreateSession />,
             },
             {
-                path: '/type/ai/game',
+                path: '/type/ai',
+                element: <DifficultySelection />,
+            },
+            {
+                path: '/type/ai/:difficulty',
                 element: <GamePage />,
             },
         ],

@@ -21,7 +21,7 @@ export default function TypesSelection() {
             const aiSymbol =
                 details.userSymbol === 'player-x' ? 'player-o' : 'player-x';
             addOpponent('AI', aiSymbol);
-            navigate('/type/ai/game');
+            navigate('/type/ai');
         }
     }
 
