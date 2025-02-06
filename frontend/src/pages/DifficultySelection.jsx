@@ -15,6 +15,12 @@ export default function DifficultySelection() {
                 Easy
             </button>
             <button
+                onClick={() => handleDifficulty('normal')}
+                className={'btn-select-game-type draw-color'}
+            >
+                Normal
+            </button>
+            <button
                 onClick={() => handleDifficulty('hard')}
                 className={'btn-select-game-type player-o-color'}
             >
