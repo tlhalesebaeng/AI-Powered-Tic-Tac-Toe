@@ -1,6 +1,6 @@
 import { useRef, forwardRef, useImperativeHandle, useContext } from 'react';
 import { createPortal } from 'react-dom';
-import { GameContext } from '../store/game-context';
+import { GameContext } from '../../store/game-context';
 import './Modal.css';
 
 const Modal = forwardRef(function Modal({ result, children }, ref) {

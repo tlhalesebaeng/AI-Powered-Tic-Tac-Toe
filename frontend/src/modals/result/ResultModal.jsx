@@ -1,7 +1,7 @@
 import { forwardRef, useContext } from 'react';
-import Modal from './Modal';
-import { DetailsContext } from '../store/details-context';
-import { GameContext } from '../store/game-context';
+import Modal from '../wrapper/Modal';
+import { DetailsContext } from '../../store/details-context';
+import { GameContext } from '../../store/game-context';
 
 const ResultModal = forwardRef(function ResultModal(
     { onHome, onReplay, result },
