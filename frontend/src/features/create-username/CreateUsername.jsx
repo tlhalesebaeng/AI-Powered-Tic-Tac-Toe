@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import Form from '../../components/Form.jsx';
+import Form from '../../components/form/Form';
 
 export default function LandingPage() {
     const usernameRef = useRef(); //refers to the username input

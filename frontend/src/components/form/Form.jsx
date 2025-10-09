@@ -1,8 +1,8 @@
 import { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 import './Form.css';
-import { DetailsContext } from '../store/details-context';
+import { DetailsContext } from '../../store/details-context';
 import { useNavigate } from 'react-router-dom';
-import socket from '../../socket';
+import socket from '../../../socket';
 
 const Form = forwardRef(function Form(
     { onSubmit, title, renderUsername },

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Form from '../../components/Form';
+import Form from '../../components/form/Form';
 import SessionModal from '../../modals/session/SessionModal';
 import socket from '../../../socket';
 import { DetailsContext } from '../../store/details-context';
