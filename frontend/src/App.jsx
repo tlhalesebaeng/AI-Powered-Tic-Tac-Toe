@@ -5,7 +5,7 @@ import CreateUsername from './features/create-username/CreateUsername.jsx';
 import RootLayout from './pages/RootLayout.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import TypesSelection from './features/select-types/TypesSelection.jsx';
-import CreateSession from './pages/CreateSession.jsx';
+import CreateSession from './features/create-session/CreateSession.jsx';
 import DifficultySelection from './pages/DifficultySelection.jsx';
 
 const router = createBrowserRouter([
