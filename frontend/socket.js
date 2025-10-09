@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
 
-const socket = io.connect('https://ai-powered-tic-tac-toe.onrender.com/');
+const socket = io.connect(import.meta.env.VITE_BACKEND_BASE_URL);
 
 export default socket;
