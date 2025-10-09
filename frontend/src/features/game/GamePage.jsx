@@ -1,14 +1,14 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Minimax from 'tic-tac-toe-minimax';
-import GameBoard from '../components/GameBoard';
-import History from '../components/History';
-import PlayerTurn from '../components/PlayerTurn';
-import ResultModal from '../modals/ResultModal';
-import socket from '../../socket';
-import { GameContext } from '../store/game-context';
-import { DetailsContext } from '../store/details-context';
-import { deriveWinner, hasDraw, resetBoard } from '../controllers';
+import GameBoard from './GameBoard';
+import History from './History';
+import PlayerTurn from './PlayerTurn';
+import ResultModal from '../../modals/ResultModal';
+import socket from '../../../socket';
+import { GameContext } from '../../store/game-context';
+import { DetailsContext } from '../../store/details-context';
+import { deriveWinner, hasDraw, resetBoard } from '../../controllers';
 
 let GAME_BOARD = [
     [null, null, null],

@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import GamePage from './pages/GamePage';
+import GamePage from './features/game/GamePage.jsx';
 import CreateUsername from './features/create-username/CreateUsername.jsx';
 import RootLayout from './pages/RootLayout.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
