@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Minimax from 'tic-tac-toe-minimax';
-import './GamePage.css';
 import GameBoard from '../components/GameBoard';
 import History from '../components/History';
 import PlayerTurn from '../components/PlayerTurn';

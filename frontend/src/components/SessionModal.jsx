@@ -1,7 +1,5 @@
-import { forwardRef, useEffect } from 'react';
+import { forwardRef } from 'react';
 import Modal from './Modal';
-import './SessionModal.css';
-import socket from '../../socket';
 
 const SessionModal = forwardRef(function SessionModal(
     { onCancel, onAccept, heading, modalType },

@@ -1,5 +1,3 @@
-import LandingPage from './LandingPage';
-
 export default function ErrorPage() {
     return (
         <main>

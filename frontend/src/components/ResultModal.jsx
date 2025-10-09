@@ -1,5 +1,4 @@
 import { forwardRef, useContext } from 'react';
-import './ResultModal.css';
 import Modal from './Modal';
 import { DetailsContext } from '../store/details-context';
 import { GameContext } from '../store/game-context';
