@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { DetailsContext } from '../../store/details-context';
+import { DetailsContext } from '../../../store/details-context';
 import './MarkSelection.css';
 
 export default function MarkSelection({ onSelectMark }) {

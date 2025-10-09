@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { GameContext } from '../../store/game-context.jsx';
 import { DetailsContext } from '../../store/details-context.jsx';
 
-import MarkSelection from './MarkSelection.jsx';
-import GameType from './GameType.jsx';
+import MarkSelection from './mark-type/MarkSelection.jsx';
+import GameType from './game-type/GameType.jsx';
 import './TypesSelection.css';
 
 export default function TypesSelection() {

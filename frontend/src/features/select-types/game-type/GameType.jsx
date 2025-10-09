@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { GameContext } from '../../store/game-context.jsx';
+import { GameContext } from '../../../store/game-context.jsx';
 
 import './GameType.css';
 
