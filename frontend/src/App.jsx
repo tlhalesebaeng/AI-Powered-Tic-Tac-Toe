@@ -6,7 +6,7 @@ import RootLayout from './pages/RootLayout.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import TypesSelection from './features/select-types/TypesSelection.jsx';
 import CreateSession from './features/create-session/CreateSession.jsx';
-import DifficultySelection from './pages/DifficultySelection.jsx';
+import DifficultySelection from './features/select-difficulty/DifficultySelection.jsx';
 
 const router = createBrowserRouter([
     {
