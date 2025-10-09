@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { GameContext } from '../../store/game-context';
+import { GameContext } from '../../../store/game-context';
 import './GameBoard.css';
 
 export default function GameBoard({ onSelectSquare, board, disableButton }) {

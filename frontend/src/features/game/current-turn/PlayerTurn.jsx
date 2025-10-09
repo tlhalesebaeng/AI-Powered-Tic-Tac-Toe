@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import './PlayerTurn.css';
-import { GameContext } from '../../store/game-context';
-import { DetailsContext } from '../../store/details-context';
+import { GameContext } from '../../../store/game-context';
+import { DetailsContext } from '../../../store/details-context';
 
 export default function PlayerTurn({ turn }) {
     const { gameType } = useContext(GameContext);

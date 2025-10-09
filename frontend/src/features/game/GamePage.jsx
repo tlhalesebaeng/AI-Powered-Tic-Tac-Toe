@@ -1,9 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Minimax from 'tic-tac-toe-minimax';
-import GameBoard from './GameBoard';
-import History from './History';
-import PlayerTurn from './PlayerTurn';
+import GameBoard from './board/GameBoard';
+import History from './score-history/History';
+import PlayerTurn from './current-turn/PlayerTurn';
 import ResultModal from '../../modals/ResultModal';
 import socket from '../../../socket';
 import { GameContext } from '../../store/game-context';
