@@ -1,10 +1,12 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MarkSelection from '../components/MarkSelection.jsx';
-import GameType from '../components/GameType';
+
+import { GameContext } from '../../store/game-context.jsx';
+import { DetailsContext } from '../../store/details-context.jsx';
+
+import MarkSelection from './MarkSelection.jsx';
+import GameType from './GameType.jsx';
 import './TypesSelection.css';
-import { GameContext } from '../store/game-context.jsx';
-import { DetailsContext } from '../store/details-context.jsx';
 
 export default function TypesSelection() {
     const navigate = useNavigate();
