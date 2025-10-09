@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import GamePage from './pages/GamePage';
-import LandingPage from './pages/LandingPage.jsx';
+import LandingPage from './features/create-username/LandingPage.jsx';
 import RootLayout from './pages/RootLayout.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import TypesSelection from './pages/TypesSelection.jsx';

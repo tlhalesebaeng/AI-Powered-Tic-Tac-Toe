@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import Form from '../components/Form';
+import Form from '../../components/Form.jsx';
 
 export default function LandingPage() {
     const usernameRef = useRef(); //refers to the username input
@@ -8,6 +8,7 @@ export default function LandingPage() {
     function handleSubmitUsername(event) {
         usernameRef.current.submitUsername(event); //submit the username
     }
+
     return (
         <Form
             onSubmit={handleSubmitUsername}
