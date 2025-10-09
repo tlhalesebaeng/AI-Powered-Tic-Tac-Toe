@@ -4,7 +4,7 @@ import Minimax from 'tic-tac-toe-minimax';
 import GameBoard from '../components/GameBoard';
 import History from '../components/History';
 import PlayerTurn from '../components/PlayerTurn';
-import ResultModal from '../components/ResultModal';
+import ResultModal from '../modals/ResultModal';
 import socket from '../../socket';
 import { GameContext } from '../store/game-context';
 import { DetailsContext } from '../store/details-context';
