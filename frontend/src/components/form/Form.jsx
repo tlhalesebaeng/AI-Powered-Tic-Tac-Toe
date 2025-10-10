@@ -60,7 +60,7 @@ const Form = forwardRef(function Form(
     return (
         <form className="container column">
             <h2>{title}</h2>
-            <input ref={usernameRef} />
+            <input type="text" placeholder="Your username" ref={usernameRef} />
             {renderUsername && <p>{`Your username: ${details.username}`}</p>}
             <button onClick={onSubmit} className="player-o-color">
                 Continue
