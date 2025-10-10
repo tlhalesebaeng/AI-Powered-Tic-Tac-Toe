@@ -27,7 +27,7 @@ export default function MarkSelection({ onSelectMark }) {
                             : 'not-selected-mark'
                     }  O`}
                 >
-                    0
+                    O
                 </button>
             </div>
             <p>Player X goes first</p>
