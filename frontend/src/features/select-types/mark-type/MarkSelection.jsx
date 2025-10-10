@@ -7,7 +7,7 @@ export default function MarkSelection({ onSelectMark }) {
 
     return (
         <div className="mark-selection-container column">
-            <h2>Select player 1's mark</h2>
+            <h3>Select player 1's mark</h3>
             <div className="selection-container row">
                 <button
                     onClick={() => onSelectMark('player-x')}
