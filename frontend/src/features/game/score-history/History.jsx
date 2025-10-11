@@ -1,6 +1,6 @@
 import './History.css';
 
-export default function GameHistory({ history }) {
+export default function GameHistory({ history = {} }) {
     return (
         <ul className="game-history">
             <li className="player-x-color">
