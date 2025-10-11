@@ -25,7 +25,7 @@ describe('Form component', () => {
 
     it('renders an input field', async () => {
         render(<Form />);
-        const input = await screen.queryByPlaceholderText(/your username/i);
+        const input = await screen.queryByPlaceholderText(/username/i);
         expect(input).not.toBeNull();
     });
 
