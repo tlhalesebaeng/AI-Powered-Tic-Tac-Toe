@@ -1,12 +1,12 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import GamePage from './features/game/GamePage.jsx';
-import CreateUsername from './features/create-username/CreateUsername.jsx';
+import GamePage from '../features/game/GamePage.jsx';
+import CreateUsername from '../features/create-username/CreateUsername.jsx';
 import RootLayout from './RootLayout.jsx';
-import ErrorPage from './features/errors/ErrorPage.jsx';
-import TypesSelection from './features/select-types/TypesSelection.jsx';
-import CreateSession from './features/create-session/CreateSession.jsx';
-import DifficultySelection from './features/select-difficulty/DifficultySelection.jsx';
+import ErrorPage from '../features/errors/ErrorPage.jsx';
+import TypesSelection from '../features/select-types/TypesSelection.jsx';
+import CreateSession from '../features/create-session/CreateSession.jsx';
+import DifficultySelection from '../features/select-difficulty/DifficultySelection.jsx';
 
 const router = createBrowserRouter([
     {
