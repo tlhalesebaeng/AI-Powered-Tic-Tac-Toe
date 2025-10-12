@@ -8,7 +8,7 @@ import ResultModal from '../../modals/result/ResultModal';
 import socket from '../../../socket';
 import { GameContext } from '../../store/game-context';
 import { DetailsContext } from '../../store/details-context';
-import { deriveWinner, hasDraw, resetBoard } from '../../controllers';
+import { deriveWinner, hasDraw, resetBoard } from '../../utils/controllers';
 
 let GAME_BOARD = [
     [null, null, null],
